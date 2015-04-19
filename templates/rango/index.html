@@ -1,0 +1,38 @@
+{% extends 'rango/base.html' %}
+{% block title %}
+Rango Homepage
+{% endblock %}
+{% block body_block %}
+	    {% load staticfiles %}
+	<img src="{% static 'images/rango.png' %}" alt="Image of rango!" height="400px">
+
+<br>
+
+	{% if user.is_authenticated %}
+		<h1>Welcome {{ user.username }}!!</h1>
+{% else %}
+		<h1>Welcome Guest!!</h1>
+{% endif %}
+
+<br>
+
+
+	{% if categories_likes %}
+		<h2>Ordered By Likes</h2>
+            <ol>
+                {% for category in categories_likes %}
+                <li><a href="{% url 'category'  category.slug %}" target="_blank">{{ category.name }}</a></li>
+                {% endfor %}
+            </ol>
+		<h2>Ordered By Views</h2>
+		<ol>
+                {% for category in categories_views %}
+                <li><a href="{% url 'category'  category.slug %}" target="_blank">{{ category.name }}</a></li>
+                {% endfor %}
+            </ol>
+        {% else %}
+            <strong>There are no categories present.</strong>
+        {% endif %}
+	<p> No of visits: {{ visit }}</p>
+
+{% endblock %}
